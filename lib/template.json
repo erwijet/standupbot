@@ -1,0 +1,67 @@
+{
+    "blocks": [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "Standup :star:",
+                "emoji": true
+            }
+        },
+        {
+            "type": "section",
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "*Team Member:*\n##user##"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "*Submitted on:*\n##datetime##"
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "section",
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "*Past Work:*\n##past_work##"
+                }
+            ]
+        },
+        {
+            "type": "section",
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "*Current Work:*\n##cur_work##"
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": " "
+            },
+            "accessory": {
+                "type": "button",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Submit a Standup",
+                    "emoji": true
+                },
+                "value": "click_me_123",
+                "url": "https://team3standup.vercel.app",
+                "action_id": "button-action"
+            }
+        }
+    ]
+}
