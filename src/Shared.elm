@@ -11,16 +11,18 @@ import Http
 type alias Model =
     { template: String
     , slackHook: String
-    , user: String
+    , g_userName: String
+    , g_userImg: String
+    , date: String
     , pastWork: String
     , curWork: String
-    , output: String
+    , slackPosted: Bool
     , error: Maybe String
     }
 
 type Msg
     = SlackApiDone ( Result Http.Error String )
     | PostStandup
-    | UpdateUserStr String
+    | CloseModal
     | UpdatePastWorkStr String
     | UpdateCurWorkStr String

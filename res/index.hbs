@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Main</title>
+        <meta
+            name='google-signin-client_id'
+            content='{{g_clientId}}.apps.googleusercontent.com'
+        />
+        <link
+            rel='stylesheet'
+            href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css'
+            integrity='sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q=='
+            crossorigin='anonymous'
+            referrerpolicy='no-referrer'
+        />
+        <link
+            rel='stylesheet'
+            href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'
+            integrity='sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=='
+            crossorigin='anonymous'
+            referrerpolicy='no-referrer'
+        />
+        <script
+            src='https://apis.google.com/js/platform.js'
+            async
+            defer
+        ></script>
+        <script src='elm.js'></script>
+        <style>
+            ::-webkit-scrollbar { display: none } html { overflow: auto;
+            -ms-overflow-style: none; scrollbar-width: none; }
+        </style>
+    </head>
+
+    <body>
+        <div id='signin'>
+            <div
+                class='card'
+                style='width: 50%; position: absolute; top: 50%; right: 50%; transform: translate(50%, -50%)'
+            >
+                <header class='card-header'>
+                    <p class='card-header-title'>
+                        SWEN 261 Team 3 Standup Form
+                    </p>
+                </header>
+                <div class='card-content'>
+                    <div class='content'>
+                        This is the form to submit virtual "standups", which
+                        will be posted in the standups slack channel. To
+                        continue, please log in with your Google account
+                        <br />
+                    </div>
+                </div>
+                <footer class='card-footer'>
+                    <a
+                        class='card-footer-item'
+                        href='https://rit-swen-261-01-2215.slack.com'
+                    >Slack Workspace</a>
+                    <a
+                        class='card-footer-item g-signin2'
+                        data-onsuccess='onSignIn'
+                        data-longtitle='true'
+                    ></a>
+                    <a
+                        class='card-footer-item'
+                        href='https://github.com/erwijet/standupbot'
+                    >StandupBot Github</a>
+                </footer>
+            </div>
+        </div>
+
+        <div id='root'></div>
+
+        <script>
+            function onSignIn(gUser) { const profile = gUser.getBasicProfile();
+            document.getElementById('signin').style.display = 'none'; const
+            username = profile.getName(); const img = profile.getImageUrl();
+            Elm.Main.init({ node: document.getElementById('root'), flags: [ '{{{slackTemplate}}}',
+            '{{{slackHook}}}', username, img, new Date().toDateString() ] }); }
+        </script>
+    </body>
+</html>

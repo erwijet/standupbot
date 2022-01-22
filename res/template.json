@@ -4,7 +4,7 @@
             "type": "header",
             "text": {
                 "type": "plain_text",
-                "text": "Standup :star:",
+                "text": "Standup Report",
                 "emoji": true
             }
         },
@@ -17,7 +17,7 @@
                 },
                 {
                     "type": "mrkdwn",
-                    "text": "*Submitted on:*\n##datetime##"
+                    "text": "*Submitted on:*\n##date##"
                 }
             ]
         },
