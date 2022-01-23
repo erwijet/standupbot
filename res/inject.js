@@ -6,12 +6,22 @@ require('dotenv').config();
 
 console.log('Starting Injecter...\n');
 
-if (
-    !process.env.TEMPLATE ||
-    !process.env.SLACK_HOOK ||
-    !process.env.GOOGLE_CLIENT_ID
-)
-    throw "❌ It doens't look like you have defined a TEMPLATE, GOOGLE_CLIENT_ID, and SLACK_HOOK env var ";
+const MISSING_ENVS = [
+    'TEMPLATE',
+    'SLACK_HOOK',
+    'GOOGLE_CLIENT_ID',
+    'SLACK_LINK',
+].filter((e) => !process.env[e]);
+
+if (MISSING_ENVS.length > 0)
+    throw (
+        '☹   yikes! It looks like you have some missing env variables: \n\n' +
+        MISSING_ENVS.reduce(
+            (acc, _var) => (acc += '❌  Missing ENV --> ' + _var + '\n'),
+            ''
+        ) +
+        '\n------------------------------\n\n✖  Build Failed!'
+    );
 
 const slackTemplate = fs
     .readFileSync(resolve(__dirname, '..', process.env.TEMPLATE))
@@ -26,6 +36,7 @@ fs.writeFileSync(
         slackTemplate: JSON.stringify(JSON.parse(slackTemplate)),
         slackHook: process.env.SLACK_HOOK,
         g_clientId: process.env.GOOGLE_CLIENT_ID,
+        slackLink: process.env.SLACK_LINK,
     })
 );
 

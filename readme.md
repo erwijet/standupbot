@@ -15,6 +15,7 @@ If you want to set this project up for your own team, first go ahead and clone t
 |     TEMPLATE     | The relative path to the template.json file. If you do not want to customize this at all, set it equal to `res/template.json` |
 |    SLACK_HOOK    | the url of the Slack webhook to call to on form submission                                                                    |
 | GOOGLE_CLIENT_ID | the Google OAuth2 client id (just the part before the `.apps.googleusercontent.com`)                                          |
+|    SLACK_LINK    | The url to your slack workspace. This will be linked on the StandupBot landing page                                           |
 
 ### Google Authenticaion
 
