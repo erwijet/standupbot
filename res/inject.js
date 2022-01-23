@@ -4,7 +4,7 @@ const { resolve } = require('path');
 
 require('dotenv').config();
 
-console.log('Starting Injecter...\n');
+console.log('Starting Injector...\n');
 
 const MISSING_ENVS = [
     'TEMPLATE',
