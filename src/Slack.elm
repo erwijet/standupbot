@@ -1,28 +1,8 @@
-module Slack exposing (msgErrorDecoder, msgSuccessDecoder, sendSlackMsg)
+module Slack exposing (sendSlackMsg)
 
 import Http exposing (expectString, request, send)
-import Json.Decode as JD
 import Shared exposing (..)
 import String exposing (replace)
-
-
-
---
-
-
-msgSuccessDecoder : JD.Decoder String
-msgSuccessDecoder =
-    JD.field "output" JD.string
-
-
-msgErrorDecoder : JD.Decoder String
-msgErrorDecoder =
-    JD.field "error" JD.string
-
-
-
---
-
 
 sendSlackMsg : Model -> Cmd Msg
 sendSlackMsg model =

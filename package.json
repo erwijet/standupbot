@@ -2,21 +2,19 @@
     "name": "standupbot",
     "version": "1.0.0",
     "description": "",
-    "main": "webpack.config.js",
     "scripts": {
         "elm": "elm make src/Main.elm --optimize --output=build/elm.js",
         "build": "npm run elm && node res/inject.js",
         "start": "npm run build && serve build -p 5000",
-        "dev": "nodemon -e elm --exec npm run start"
+        "dev": "nodemon -e elm,hbs --exec npm run start"
     },
     "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "author": "Tyler Holewinksi (tsh6656 / @erwijet)",
+    "license": "MIT",
     "devDependencies": {
         "dotenv": "^14.2.0",
         "elm": "^0.19.1-5",
         "handlebars": "^4.7.7",
-        "serve": "^13.0.2",
-        "util": "^0.12.4"
+        "serve": "^13.0.2"
     }
 }

@@ -1,18 +1,17 @@
 module Main exposing (..)
 
-import Array exposing (..)
-import String exposing (split)
-import Browser
-import List
-import Debug
-import Modal exposing (modal)
+import Array exposing (Array, get)
+import Browser exposing (element)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http exposing (..)
 import Json.Decode as JD
+import List exposing (head)
+import Modal exposing (modal)
 import Shared exposing (..)
 import Slack
+import String exposing (split)
 
 
 fromJust : Maybe String -> String
@@ -24,9 +23,10 @@ fromJust x =
         Nothing ->
             ""
 
+
 main : Program (Array String) Model Msg
 main =
-    Browser.element
+    element
         { init = init
         , view = view
         , update = update
@@ -68,13 +68,8 @@ update msg model =
                         Http.NetworkError ->
                             "Network error"
 
-                        Http.BadStatus response ->
-                            case JD.decodeString Slack.msgErrorDecoder response.body of
-                                Ok errStr ->
-                                    errStr
-
-                                Err _ ->
-                                    response.status.message
+                        Http.BadStatus _ ->
+                            "Bad Status from Slack API"
 
                         Http.BadUrl badUrlMsg ->
                             "Bad url: " ++ badUrlMsg
@@ -104,26 +99,28 @@ view model =
         outDiv =
             case model.error of
                 Nothing ->
-                    if model.slackPosted then modal "is-success" "Success!" "Standup posted to Slack. Check the Standup channel and it should be there!" else div [] []
+                    if model.slackPosted then
+                        modal "Success!" "Standup posted to Slack. Check the Standup channel and it should be there!"
+
+                    else
+                        div [] []
+
                 Just err ->
-                    div []
-                        [ label [ for "errorUpcase" ] [ text "Error" ]
-                        , input [ type_ "text", id "errorUpcase", readonly True, value err ] []
-                        ]
+                    modal ("Oh no! " ++ err) "Standupbot failed to post to slack. Check your connection and try again? If the issue persists, please reach out to tsh6656@rit.edu"
     in
     div []
         [ section [ class "hero is-link is-medium" ]
             [ div [ class "hero-body" ]
-                [ p [ class "title" ] [text ( "Hello, " ++ ( fromJust ( ( split " " model.g_userName ) |> List.head ) ) ) ] 
-                , p [ class "subtitle" ] [ text "SWEN 261-01 Team 3 Standup Submission Form" ] 
-                ]  
+                [ p [ class "title" ] [ text ("Hello, " ++ (split " " model.g_userName |> head |> fromJust)) ]
+                , p [ class "subtitle" ] [ text "SWEN 261-01 Team 3 Standup Submission Form" ]
+                ]
             ]
         , div [ class "box", style "margin" "1%", style "padding" "1%" ]
             [ div [ class "field" ] [ label [ class "label" ] [ text "Past Work" ], div [ class "control" ] [ textarea [ class "textarea", placeholder "Watching Netflix...", onInput UpdatePastWorkStr ] [] ] ]
             , div [ class "field" ] [ label [ class "label" ] [ text "Planned Work" ], div [ class "control" ] [ textarea [ class "textarea", placeholder "Eat potato chips...", onInput UpdateCurWorkStr ] [] ] ]
-            , button [ class "button is-success is-outlined", onClick PostStandup ] 
+            , button [ class "button is-success is-outlined", onClick PostStandup ]
                 [ span [ class "icon is-small" ] [ i [ class "fab fa-slack" ] [] ]
-                , span [] [ text "Post in Slack" ] 
+                , span [] [ text "Post in Slack" ]
                 ]
             ]
         , outDiv
